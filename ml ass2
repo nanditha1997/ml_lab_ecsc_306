@@ -1,0 +1,35 @@
+import tensorflow as tf
+var1 = tf.constant([1,2,3],dtype =tf.float32) # variable x
+var2 = tf.constant([13,23,33],dtype =tf.float32) #variable y
+
+m1 = tf.reduce_mean(var1) #mean(x)
+m2 = tf.reduce_mean(var2) #mean(y)
+
+sub=tf.subtract(var1,m1) #variance(x)
+sq = tf.square(sub)
+v = tf.reduce_sum(sq) 
+
+c1 = tf.subtract(var1,m1)# c0-variance
+c2=tf.subtract(var2,m2)
+m=tf.multiply(c1,c2)
+covariance=tf.reduce_sum(m)
+
+mg=tf.div(covariance,v)# slope m
+
+cp=tf.multiply(mg,m1)
+
+cg=tf.subtract(m2,cp)#intercept c
+
+with tf.Session() as sess:
+    tf.InteractiveSession
+    print(sess.run(var1))
+    print(sess.run(var2))
+    print(sess.run(m1))
+    print(sess.run(m2))
+    print(sess.run(v))
+    print(sess.run(covariance))
+    print(sess.run(mg))
+    print(sess.run(cg))
+    writer=tf.summary.FileWriter("/tmp/tboard/output",sess.graph)
+    writer.close()
+    

@@ -1,0 +1,34 @@
+import tensorflow as tf
+import matplotlib.pyplot as plt
+ 
+x = [2,5,7,10] # variable x
+y = [3,8,10,15] #variable y
+xmean=tf.reduce_mean(x)
+#tf.to_float(xmean, name='ToFloat')
+
+ymean=tf.reduce_mean(y)
+#tf.to_float(ymean, name='ToFloat')
+
+covar=0
+var=0
+for i in range(0,len(x)):
+    covar=covar+(x[i]-xmean)*(y[i]-ymean)
+    var=var+tf.square(x[i]-xmean)
+
+teta1=tf.div(covar,var)
+#tf.to_float(teta1, name='ToFloat')
+#teta1=tf.div(teta1temp,len(x))
+teta0=ymean-(xmean*teta1)
+#tf.to_float(teta0, name='ToFloat')
+ynew=teta0+teta1*5
+#tf.to_float(ynew, name='ToFloat')
+print (x)
+print (y)
+with tf.Session() as sess:
+    print(sess.run(teta1))
+    print(sess.run(teta0))
+    print(sess.run(ynew))
+    writer = tf.summary.FileWriter("/tmp/tboard/output1", sess.graph)
+    writer.close()
+plt.plot(x,y) 
+plt.show()
